@@ -1,0 +1,16 @@
+Proj is a lightweight project manager for the terminal
+
+
+Given a PROJECT_DIR you can do things like:
+    - Automatically create ctags
+    - Making a project active `ma rent`
+        - Django
+    - Jumping to a project `(proj|project) rentacarnow`
+
+
+TODO:
+ - Onload script for make_active
+    - When making a project active, you should be able to run a directory
+    of scripts. For example:
+        ./django.sh - Check for django project, if so setup environment
+

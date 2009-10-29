@@ -1,0 +1,35 @@
+#!/bin/bash
+
+BASE_DIR=`dirname $BASH_SOURCE`
+SYS_DIR=$BASEDIR/sys
+
+proj() {
+
+    if [ -z "${PROJ_DIR+x}" ]; then
+        echo "ERROR: The environment variable PROJ_DIR is not set"
+        return
+    fi
+
+    SEARCH_DIR=$PROJ_DIR/$@*
+
+    num_files=$(ls -d $SEARCH_DIR 2> /dev/null|wc -l)
+    if [ $num_files == "0" ]; then
+        echo "ERROR: No files match '$SEARCH_DIR'"
+        return
+    fi
+
+    if [ "$num_files" -gt 1 ]; then
+        # Check for exact match
+        if [ ! -d $PROJ_DIR/$@ ]; then
+            echo "ERROR: Matched too many files for '$@*'"
+            return
+        fi
+    fi
+
+    PROJECT_DIR=$PROJ_DIR/$@
+
+    export ACTIVE_PROJECT=`basename $PROJECT_DIR`
+    cd $PROJECT_DIR 
+    install_scripts $SYS_DIR/*
+    echo "Project $ACTIVE_PROJECT is now active"
+}
