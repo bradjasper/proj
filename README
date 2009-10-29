@@ -9,7 +9,5 @@ Given a PROJECT_DIR you can do things like:
 
 
 TODO:
- - Onload script for make_active
- - List all projects if not parameters are passed
- - Make it easier to jump around between projects
- - Add active project to PS1?
+ - Implement ctags (not for every project?)
+    
