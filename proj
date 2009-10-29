@@ -1,7 +1,15 @@
 #!/bin/bash
 
-BASE_DIR=`dirname $BASH_SOURCE`
-SYS_DIR=$BASEDIR/sys
+# Check if this is a symlink
+if [ -L "$BASH_SOURCE" ]; then
+    SCRIPT_PATH=`readlink $BASH_SOURCE`
+    BASE_DIR=`dirname $SCRIPT_PATH`
+
+else
+    BASE_DIR=`dirname $BASH_SOURCE`
+fi
+
+SYS_DIR=$BASE_DIR/sys
 
 proj() {
 
@@ -20,16 +28,18 @@ proj() {
 
     if [ "$num_files" -gt 1 ]; then
         # Check for exact match
-        if [ ! -d $PROJ_DIR/$@ ]; then
+        if [ -d $PROJ_DIR/$@ ]; then
+            export PROJECT_DIR=$PROJ_DIR/$@
+        else
             echo "ERROR: Matched too many files for '$@*'"
             return
         fi
+    else
+        export PROJECT_DIR=$PROJ_DIR/$@*
     fi
 
-    PROJECT_DIR=$PROJ_DIR/$@
-
     export ACTIVE_PROJECT=`basename $PROJECT_DIR`
+
     cd $PROJECT_DIR 
     install_scripts $SYS_DIR/*
-    echo "Project $ACTIVE_PROJECT is now active"
 }

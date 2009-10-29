@@ -10,7 +10,6 @@ Given a PROJECT_DIR you can do things like:
 
 TODO:
  - Onload script for make_active
-    - When making a project active, you should be able to run a directory
-    of scripts. For example:
-        ./django.sh - Check for django project, if so setup environment
-
+ - List all projects if not parameters are passed
+ - Make it easier to jump around between projects
+ - Add active project to PS1?
